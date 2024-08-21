@@ -1,11 +1,8 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:edit, :show, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @tasks = Task.all
-  end
-
-  def show
   end
 
   def new
@@ -15,18 +12,23 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:notice] = 'Task was successfully created.'
-      # byebug
+      flash[:notice] = "Task is created successfully"
       redirect_to @task
     else
       render :new
     end
   end
 
+  def show
+  end
+
+  def edit
+  end
+
   def update
     if @task.update(task_params)
-      flash[:notice] = 'Task was updated successfully'
-      redirect_to tasks_path
+      flash[:notice] = "Task updated successfully"
+      redirect_to task_path
     else
       render :edit
     end
@@ -34,8 +36,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    flash[:notice] = 'Task was deleted successfully'
-    # byebug
+    flash[:notice] = "Task is deleted succesfully"
     redirect_to root_path
   end
 
@@ -48,5 +49,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :description, :completed)
   end
-
 end
